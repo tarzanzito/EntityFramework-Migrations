@@ -1,0 +1,17 @@
+1 - Open windows Package Manager Console (Windows)
+Menu / Tools / NuGet Package Manager / Package Manger Console
+
+
+2 - Create Migration
+Add-Migration  MigrationName [options]
+
+3- Run Up (method) 
+update-database [options]
+
+4 - Run Down (method)
+Remove-Migration
+
+
+
+sites:
+http://www.macoratti.net/20/08/efc_migration1.htm
