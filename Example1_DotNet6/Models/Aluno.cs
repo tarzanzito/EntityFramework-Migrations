@@ -7,6 +7,7 @@ namespace Migration2.Models
     [Table("Alunos")]
     public class Aluno
     {
+        [Key]
         public int Id { get; set; }
 
         //[DataType(DataType.Text)]
