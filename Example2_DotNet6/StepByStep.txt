@@ -1,0 +1,65 @@
+- Add packages
+
+Microsoft.EntityFrameworkCore.SqlServer
+Microsoft.EntityFrameworkCore.Sqlite
+Microsoft.EntityFrameworkCore.Tools
+
+*-Add Connection in "appsettings.json"
+*  "ConnectionStrings": {
+*    "DefaultConnection1": "Data Source=PC-I5\\SQLEXPRESS;Initial Catalog=MyTest;Integrated Security=True",
+*    "DefaultConnection2": "Data Source=PC-I5\\SQLEXPRESS;Initial Catalog=MyTest;Integrated Security=False;User ID=sa;Password=admin;",
+*    "DefaultConnection3": "Data Source=Data Source=mydb.sqlite;",
+*    "DefaultConnection4": "Data Source=Data Source=mydb.sqlite;Version=3;"
+*  }
+
+- Create Models in \Models
+
+public class Xpto
+{
+  public Guid Id { get; set; }
+  public string Name { get; set; }
+}
+
+- Create DbContext
+public class AppDbContext : DbContext
+{
+  //public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+  //{
+  //}
+  protected override void OnConfiguring(DbContextOptionsBuilder options)
+  {
+    options.UseSqlite("Data Source=mydb.sqlite;");
+    options.LogTo(Console.WriteLine);
+  }
+  public DbSet<Xpto> Alunos { get; set; }
+}
+
+- Commands
+* dotnet add package Microsoft.EntityFramework.Core.SqlServer (or .Sqlite)
+
+* dotnet clean
+* dotnet build
+* dotnet run
+
+- Migration
+(criacao das classes da migration) (pode dar erro se: apenas deve ter um package activo de "Microsoft.EntityFrameworkCore.Sql*)
+* dotnet ef migrations add myInitialCreation  
+
+Se erro (intended to run a global tool)
+  (instalar a extensao dotnet ef)
+  * dotnet tool install --global dotnet-ef 
+
+(precisa das packages)
+  Microsoft.EntityFrameworkCore.Design
+  Microsoft.EntityFrameworkCore.Tools 
+* dotnet add package Microsoft.EntityFrameworkCore.Design
+
+
+* dotnet ef migrations add myInitialCreation
+
+(criacao das tabelas na base de dados)
+* dotnet ef database update
+
+(gerar o script sql das tabelas)
+* dotnet ef migrations script -o ./script.sql
+

@@ -1,0 +1,55 @@
+- Add packages
+
+Microsoft.EntityFrameworkCore.SqlServer
+Microsoft.EntityFrameworkCore.Sqlite
+Microsoft.EntityFrameworkCore.Tools
+
+
+- Create Models in \Models
+
+public class Person
+{
+  public int Id { get; set; }
+  public string Name { get; set; }
+}
+
+- Create DbContext
+public class AppDbContext : DbContext
+{
+  protected override void OnConfiguring(DbContextOptionsBuilder options)
+  {
+    options.UseSqlite("Data Source=mydb.sqlite;");
+    options.LogTo(Console.WriteLine);
+  }
+  public DbSet<Person> Personss { get; set; }
+}
+
+- Commands
+* dotnet add package Microsoft.EntityFramework.Core.SqlServer (or .Sqlite)
+
+* dotnet clean
+* dotnet build
+* dotnet run
+
+- Migration
+(criacao das classes da migration) (pode dar erro se: apenas deve ter um package activo de "Microsoft.EntityFrameworkCore.Sql*)
+* dotnet ef migrations add myInitialCreation  
+
+Se erro == (intended to run a global tool)
+  (instalar a extensao dotnet ef)
+  * dotnet tool install --global dotnet-ef 
+
+(precisa das packages)
+  Microsoft.EntityFrameworkCore.Design
+  Microsoft.EntityFrameworkCore.Tools 
+* dotnet add package Microsoft.EntityFrameworkCore.Design
+
+
+* dotnet ef migrations add myInitialCreation
+
+(criacao das tabelas na base de dados)
+* dotnet ef database update
+
+(gerar o script sql das tabelas)
+* dotnet ef migrations script -o ./script.sql
+
